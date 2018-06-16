@@ -3,12 +3,15 @@ package udacityscholarship.rada.raul.newsapp;
 import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,7 +45,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
         emptyTextView = (TextView) findViewById(R.id.empty_text_view);
 
-
         /** ListView containing a list of articles */
         ListView articlesListView = (ListView) findViewById(R.id.articles_list_view);
         articlesListView.setEmptyView(emptyTextView);
@@ -53,6 +55,25 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         articlesListView.setAdapter(articleAdapter);
+
+        // click listener for ListView items
+        articlesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //get the Article that was clicked on in the ListView
+                Article currentArticle = articleAdapter.getItem(position);
+
+                //convert the String Article URL into an Uri object, used to pass into Intent constructor
+                Uri articleUri = Uri.parse(currentArticle.getArticleUrl());
+
+                // intent to open web browser on user's device, in order to see selected article
+                Intent openWebSiteIntent = new Intent(Intent.ACTION_VIEW, articleUri);
+
+                // Send the intent to launch a new activity
+                startActivity(openWebSiteIntent);
+            }
+        });
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager connMgr = (ConnectivityManager)
