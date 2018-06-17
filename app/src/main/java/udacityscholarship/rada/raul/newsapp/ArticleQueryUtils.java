@@ -27,14 +27,16 @@ import java.util.ArrayList;
  */
 public final class ArticleQueryUtils {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     private static final String LOG_TAG = ArticleQueryUtils.class.getSimpleName();
 
     /**
      * Private class contructor in order to prevent creation of objects. Class is relevant only
      * for its static methods, which do not need class instantiations in order to be used.
      */
-    private ArticleQueryUtils(){
+    private ArticleQueryUtils() {
     }
 
     /**
@@ -70,7 +72,7 @@ public final class ArticleQueryUtils {
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
-            // If the request was successful (response message "ok"),
+            // If the request was successful (response code 200),
             // then read the input stream and parse the response.
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
@@ -119,7 +121,7 @@ public final class ArticleQueryUtils {
      * @param articleJSON from which the {@link Article} objects data will be extracted
      * @return ArrayList of {@link Article} objects
      */
-    private static ArrayList<Article> extractFeatureFromJson(String articleJSON){
+    private static ArrayList<Article> extractFeatureFromJson(String articleJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(articleJSON)) {
             return null;
@@ -144,7 +146,7 @@ public final class ArticleQueryUtils {
 
             // for each article in articlesArray, create an {@link Article} object and add it to
             // the articles ArrayList
-            for (int i = 0; i < articlesArray.length(); i++){
+            for (int i = 0; i < articlesArray.length(); i++) {
 
                 // get a single Article at position i within the list of Articles
                 JSONObject currentArticle = articlesArray.getJSONObject(i);
@@ -161,7 +163,7 @@ public final class ArticleQueryUtils {
                 // Try to parse the tags of the currentArticle JSONObject. If there's a problem,
                 // a JSONException exception object will be thrown.
                 // Catch the exception so the app doesn't crash, and print the error message to the logs.
-                try{
+                try {
                     // Extract the JSONArray containing the tags of the currentArticle JSONObject
                     JSONArray currentArticleTagsArray = currentArticle.getJSONArray("tags");
 
@@ -175,14 +177,14 @@ public final class ArticleQueryUtils {
 
                     //continue going through currentArticleTagsArray and get the values at keys
                     // "webTitle" of the JSONObjects in the JSONArray
-                    for (int j = 1; j < currentArticleTagsArray.length(); j++){
+                    for (int j = 1; j < currentArticleTagsArray.length(); j++) {
                         articleAuthorBuilder.append(", ");
                         articleAuthorBuilder.append(currentArticleTagsArray.getJSONObject(j).getString("webTitle"));
                     }
 
                     // update articleAuthor value built based on articleAuthorBuilder
                     articleAuthor = articleAuthorBuilder.toString();
-                } catch (JSONException e){
+                } catch (JSONException e) {
                     Log.e("ArticleQueryUtils", "Problem getting the article tags", e);
                 }
 
@@ -195,7 +197,7 @@ public final class ArticleQueryUtils {
                 try {
                     // Try to update the articleDate, if such information is available
                     articleDate = currentArticle.getString("webPublicationDate");
-                } catch (JSONException e){
+                } catch (JSONException e) {
                     Log.e("ArticleQueryUtils", "Problem getting the article tags", e);
                 }
 
@@ -206,7 +208,7 @@ public final class ArticleQueryUtils {
                 articles.add(new Article(articleTitle, articleSection, articleAuthor, articleDate, articleUrl));
             }
 
-        } catch (JSONException e){
+        } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
@@ -238,5 +240,4 @@ public final class ArticleQueryUtils {
         // Return the list of {@link Earthquake}s
         return articles;
     }
-
 }

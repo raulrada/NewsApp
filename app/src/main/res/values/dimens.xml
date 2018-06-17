@@ -13,4 +13,7 @@
     <dimen name="list_item_margin_top">5dp</dimen>
     <dimen name="list_item_margin_bottom">5dp</dimen>
 
+    <dimen name="list_item_regular_text_size">13sp</dimen>
+    <dimen name="list_item_title_text_size">16sp</dimen>
+
 </resources>

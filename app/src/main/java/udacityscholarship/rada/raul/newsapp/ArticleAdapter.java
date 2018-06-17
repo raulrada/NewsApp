@@ -20,19 +20,21 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
 
     /**
      * constructor of {@link ArticleAdapter} objects
-     * @param context is the current context (i.e. Activity) that the adapter is being created in.
+     *
+     * @param context  is the current context (i.e. Activity) that the adapter is being created in.
      * @param articles is the list of {@link Article} objects to be displayed in the list.
      */
-    public ArticleAdapter (Context context, ArrayList<Article> articles){
-        super(context,0,articles);
+    public ArticleAdapter(Context context, ArrayList<Article> articles) {
+        super(context, 0, articles);
         this.context = context;
     }
 
     /**
      * Provides a View for the ListView
-     * @param position in the list of data that should be displayed in the list item view.
+     *
+     * @param position    in the list of data that should be displayed in the list item view.
      * @param convertView the recycled view to populate.
-     * @param parent the parent ViewGroup that is used for inflation.
+     * @param parent      the parent ViewGroup that is used for inflation.
      * @return the View for the position in the ListView.
      */
     @Override
@@ -42,7 +44,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         ViewHolder holder;
 
         // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent,
                     false);
 
@@ -73,7 +75,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
 
         // display the name of the Article author(s), if available, otherwise remove the
         // relevant TextView
-        if (!TextUtils.isEmpty(currentArticle.getArticleAuthor())){
+        if (!TextUtils.isEmpty(currentArticle.getArticleAuthor())) {
             holder.listItemAuthorTextView.setVisibility(View.VISIBLE);
             holder.listItemAuthorTextView.setText(context.getString(R.string.author,
                     currentArticle.getArticleAuthor()));
@@ -81,7 +83,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
 
         // display the publishing date of the Article author(s), if available, otherwise remove the
         // relevant TextView
-        if (!TextUtils.isEmpty(currentArticle.getArticleDate())){
+        if (!TextUtils.isEmpty(currentArticle.getArticleDate())) {
             holder.listItemDateTextView.setVisibility(View.VISIBLE);
             holder.listItemDateTextView.setText(context.getString(R.string.published,
                     currentArticle.getArticleDate()));
@@ -101,6 +103,4 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         private TextView listItemAuthorTextView;
         private TextView listItemDateTextView;
     }
-
-
 }

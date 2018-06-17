@@ -1,7 +1,6 @@
 package udacityscholarship.rada.raul.newsapp;
 
 import android.app.LoaderManager;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -20,22 +19,26 @@ import java.util.List;
 
 public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Article>> {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     private static final String LOG_TAG = NewsActivity.class.getName();
-
-    /** TextView displayed when the ListView is empty */
-    private TextView emptyTextView;
-
-    /** URL String for {@link Article} data from the Guardian */
+    /**
+     * URL String for {@link Article} data from the Guardian
+     */
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?section=football&from-date=2018-06-10&q=World%20cup&show-tags=contributor&api-key=test";
-
     /**
      * Constant value for the article loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int ARTICLE_LOADER_ID = 1;
-
-    /** adapter for the list of Articles */
+    /**
+     * TextView displayed when the ListView is empty
+     */
+    private TextView emptyTextView;
+    /**
+     * adapter for the list of Articles
+     */
     private ArticleAdapter articleAdapter;
 
     @Override
@@ -50,7 +53,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         articlesListView.setEmptyView(emptyTextView);
 
         // Create a new adapter that takes an empty list of Articles as input
-        articleAdapter = new ArticleAdapter(this,new ArrayList<Article>());
+        articleAdapter = new ArticleAdapter(this, new ArrayList<Article>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface

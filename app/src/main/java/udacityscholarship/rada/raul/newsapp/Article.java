@@ -5,30 +5,41 @@ package udacityscholarship.rada.raul.newsapp;
  */
 public class Article {
 
-    /** title of the {@link Article} */
+    /**
+     * title of the {@link Article}
+     */
     private String articleTitle;
 
-    /** section in which the {@link Article} is published */
+    /**
+     * section in which the {@link Article} is published
+     */
     private String articleSection;
 
-    /** author of the {@link Article} */
+    /**
+     * author of the {@link Article}
+     */
     private String articleAuthor;
 
-    /** {@link Article} publishing date */
+    /**
+     * {@link Article} publishing date
+     */
     private String articleDate;
 
-    /** {@link Article} url */
+    /**
+     * {@link Article} url
+     */
     private String articleUrl;
 
     /**
      * {@link Article} constructor
-     * @param articleTitle title of the {@link Article}
+     *
+     * @param articleTitle   title of the {@link Article}
      * @param articleSection section in which the {@link Article} is published
-     * @param articleAuthor author of the {@link Article}
-     * @param articleDate publishing date of the {@link Article}
+     * @param articleAuthor  author of the {@link Article}
+     * @param articleDate    publishing date of the {@link Article}
      */
-    public Article (String articleTitle, String articleSection, String articleAuthor,
-                    String articleDate, String articleUrl){
+    public Article(String articleTitle, String articleSection, String articleAuthor,
+                   String articleDate, String articleUrl) {
         this.articleTitle = articleTitle;
         this.articleSection = articleSection;
         this.articleAuthor = articleAuthor;
@@ -37,7 +48,6 @@ public class Article {
     }
 
     /**
-     *
      * @return title of the {@link Article}
      */
     public String getArticleTitle() {
@@ -45,7 +55,6 @@ public class Article {
     }
 
     /**
-     *
      * @return section in which {@link Article} is published
      */
     public String getArticleSection() {
@@ -53,7 +62,6 @@ public class Article {
     }
 
     /**
-     *
      * @return name of the author of the {@link Article}
      */
     public String getArticleAuthor() {
@@ -61,7 +69,6 @@ public class Article {
     }
 
     /**
-     *
      * @return {@link Article} publishing date
      */
     public String getArticleDate() {
@@ -69,7 +76,6 @@ public class Article {
     }
 
     /**
-     *
      * @return {@link Article} URL
      */
     public String getArticleUrl() {

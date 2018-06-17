@@ -12,17 +12,21 @@ import android.content.Context;
  */
 public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
 
-    /** Tag for log messages */
+    /**
+     * Tag for log messages
+     */
     private static final String LOG_TAG = ArticleLoader.class.getName();
 
-    /** Query URL */
+    /**
+     * Query URL
+     */
     private String url;
 
     /**
      * Constructs a new {@link Article}.
      *
      * @param context of the activity
-     * @param url to load data from
+     * @param url     to load data from
      */
     public ArticleLoader(Context context, String url) {
         super(context);
