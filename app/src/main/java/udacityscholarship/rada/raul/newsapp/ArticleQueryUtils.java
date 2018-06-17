@@ -33,6 +33,11 @@ public final class ArticleQueryUtils {
     private static final String LOG_TAG = ArticleQueryUtils.class.getSimpleName();
 
     /**
+     * separator String for {@link Article} date
+     */
+    private static final String DATE_SEPARATOR = "T";
+
+    /**
      * Private class contructor in order to prevent creation of objects. Class is relevant only
      * for its static methods, which do not need class instantiations in order to be used.
      */
@@ -196,7 +201,16 @@ public final class ArticleQueryUtils {
                 // Catch the exception so the app doesn't crash, and print the error message to the logs.
                 try {
                     // Try to update the articleDate, if such information is available
-                    articleDate = currentArticle.getString("webPublicationDate");
+                    String rawDate = currentArticle.getString("webPublicationDate");
+
+                    //check the formatting of the date received from the Guardian, in order to
+                    // retain only the part containing the actual date
+                    if (rawDate.contains(DATE_SEPARATOR)){
+                        String[] dateParts = rawDate.split(DATE_SEPARATOR);
+                        articleDate = dateParts[0];
+                    } else {
+                    articleDate = rawDate;
+                    }
                 } catch (JSONException e) {
                     Log.e("ArticleQueryUtils", "Problem getting the article tags", e);
                 }
