@@ -1,3 +1,6 @@
+//code inspired by Udacity QuakeReport app at
+//https://github.com/udacity/ud843-QuakeReport/blob/f0f9cd5ee7a8d67bd2e6f7e2539664a95499831b/app/src/main/java/com/example/android/quakereport/EarthquakeLoader.java
+
 package udacityscholarship.rada.raul.newsapp;
 
 import java.util.ArrayList;
