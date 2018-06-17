@@ -18,7 +18,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Helper class containing only static methods for fetching {@link Article} relevant information
@@ -36,6 +39,16 @@ public final class ArticleQueryUtils {
      * separator String for {@link Article} date
      */
     private static final String DATE_SEPARATOR = "T";
+
+    /**
+     * constant value for identifying a connection timeout
+     */
+    private static final int CONNECTION_TIMEOUT = 15000;
+
+    /**
+     * constant value for identifying a read timeout
+     */
+    private static final int READ_TIMEOUT = 10000;
 
     /**
      * Private class contructor in order to prevent creation of objects. Class is relevant only
@@ -72,14 +85,14 @@ public final class ArticleQueryUtils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setReadTimeout(READ_TIMEOUT /* milliseconds */);
+            urlConnection.setConnectTimeout(CONNECTION_TIMEOUT /* milliseconds */);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
-            // If the request was successful (response code 200),
+            // If the request was successful (response code 200 (HttpURLConnection.HTTP_OK)),
             // then read the input stream and parse the response.
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -117,6 +130,23 @@ public final class ArticleQueryUtils {
             }
         }
         return output.toString();
+    }
+
+    /**
+     * Static method which formats the date displayed to the user
+     * @param dateObject String date which must be formatted
+     * @return formmated date
+     */
+    private static String formatDate(String dateObject) {
+        Date date1 = new Date();
+        try {
+            date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dateObject);
+        } catch (ParseException e) {
+
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd LLL yyyy");
+
+        return dateFormat.format(date1).toString();
     }
 
     /**
@@ -202,15 +232,9 @@ public final class ArticleQueryUtils {
                 try {
                     // Try to update the articleDate, if such information is available
                     String rawDate = currentArticle.getString("webPublicationDate");
+                    //format the date and include the resulting formatted String as a member of the Article
+                    articleDate = formatDate(rawDate);
 
-                    //check the formatting of the date received from the Guardian, in order to
-                    // retain only the part containing the actual date
-                    if (rawDate.contains(DATE_SEPARATOR)){
-                        String[] dateParts = rawDate.split(DATE_SEPARATOR);
-                        articleDate = dateParts[0];
-                    } else {
-                    articleDate = rawDate;
-                    }
                 } catch (JSONException e) {
                     Log.e("ArticleQueryUtils", "Problem getting the article tags", e);
                 }
